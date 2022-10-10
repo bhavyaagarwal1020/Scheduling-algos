@@ -1,0 +1,67 @@
+#include <stdio.h>
+struct Process
+{
+  int p_num,at,bt,st,ft,rt,tat,wt;
+};
+
+int main()
+{
+  int n;
+  printf("enter the number of processes=\n");
+  scanf("%d",&n);
+  struct Process p[n];
+  int rem_bt[n];
+  int completed=0,total_rt=0,total_tat=0,total_wt=0;
+  float avgrt=0,avgtat=0,avgwt=0;
+  
+  printf("Enter arrival time, burst time of each process : \nAT BT\n");
+  for(int i=0;i<n;i++)
+  {
+   scanf("%d %d",&p[i].at,&p[i].bt);
+   p[i].p_num=i+1;
+   rem_bt[i]=p[i].bt;
+  }
+
+int curr_time=0,small_index;
+while(completed!=n)
+{
+ for(int i=0;i<n;i++)
+ {
+  if(p[i].at<=curr_time && rem_bt[i]!=0)
+  {
+    small_index=i;
+    p[i].st= curr_time;
+  }
+ }
+rem_bt[small_index]--;
+
+if(rem_bt[small_index]==0)  //if 1 process's burst time over.
+{
+  completed++;
+  p[small_index].ft= curr_time+1;
+  p[small_index].rt= p[small_index].st-p[small_index].at;
+  p[small_index].tat= p[small_index].ft-p[small_index].at;
+  p[small_index].wt= p[small_index].tat-p[small_index].bt;
+  
+}
+ curr_time++;
+}
+
+printf("Process\tBT\tAT\tST\tFT\tRT\tTAT\tWT\n");
+for(int i=0;i<n;i++)
+{
+ printf( "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",p[i].p_num,p[i].bt,p[i].at,p[i].st,p[i].ft,p[i].rt,p[i].tat,p[i].wt);
+ avgrt+=p[i].rt;
+ avgtat+=p[i].tat;
+ avgwt+=p[i].wt;
+}
+
+avgrt=avgrt/n;
+avgtat=avgtat/n;
+avgwt=avgwt/n;
+printf("\nAverage response time=%f\n",avgrt);
+printf("Average turn around time=%f\n",avgtat);
+printf("Average waiting time=%f\n",avgwt);
+
+return 0;
+}
