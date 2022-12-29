@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+  int initial,n;
+  printf("enter the initial position:\n");
+  scanf("%d",&initial);
+  printf("enter the no of requests:\n");
+  scanf("%d",&n);
+  int request[n];
+  int right[n];
+  int left[n];
+  int dir;
+  for(int i=0;i<n;i++)
+  {
+   scanf("%d",&request[i]);
+  }
+
+   
+
+  for(int i=0;i<n;i++)
+  {
+    for(int j=0;j<n-i-1;j++)
+     {
+       if(request[j]>request[j+1])
+       {
+         int temp=request[j];
+         request[j]=request[j+1];
+         request[j+1]=temp;
+       }
+     }
+  }
+
+
+
+
+for(int i=0;i<n;i++)
+{
+  left[i]=0;
+  right[i]=0;
+}
+
+int j=0,k=0;
+for(int i=0;i<n;i++)
+{
+  if(request[i]<initial)
+   {
+     left[j]=request[i];
+j++;
+    }
+   else
+   { 
+     right[k]=request[i];
+k++;
+   }
+
+}
+printf("%d %d",j,k);
+
+
+int ans[n];
+ans[0]=initial;
+printf("enter the direction 0: left,  1:right\n");
+scanf("%d",&dir);
+int a;
+if(dir==0)
+{
+a=1;
+  for(int i=j-1;i>=0;i--)
+{
+  ans[a]=left[i];
+a++;
+}
+//ans[a]=0;
+//a++;
+for(int i=0;i<k;i++)
+{
+  ans[a]=right[i];
+  a++;
+}
+
+ printf("scheduling ans:\n");
+for(int i=0;i<a;i++)
+{
+   printf("%d ",ans[i]);
+}
+}
+int head_mov;
+head_mov=fabs(0-initial)+fabs(0-ans[a-1]);
+printf("total head movements= %d",head_mov);
+  
+
+if(dir==1)
+{
+a=1;
+  for(int i=0;i<k;i++)
+{
+  ans[a]=right[i];
+a++;
+}
+//ans[a]=199;
+//a++;
+for(int i=j-1;i>=0;i--)
+{
+  ans[a]=left[i];
+  a++;
+}
+
+ printf("scheduling ans:\n");
+for(int i=0;i<a;i++)
+{
+   printf("%d ",ans[i]);
+}
+
+int head_mov;
+head_mov=fabs(199-initial)+fabs(199-ans[0]);
+printf("total head movements= %d",head_mov);
+  
+}
+return 0;
+}
