@@ -1,0 +1,58 @@
+#include <stdio.h>
+int main()
+{
+ int n;
+ printf("enter number of pages=\n");
+ scanf("%d",&n);
+int page[n];
+ printf("enter pages=\n");
+ for(int i=0;i<n;i++)
+{
+  scanf("%d",&page[i]);
+}
+int no;
+printf("enter the number of frames:\n");
+scanf("%d",&no);
+
+int frames[n];
+
+int max=page[0];
+for(int i=0;i<n;i++)
+{
+  if(page[i]>max)
+  {
+    max=page[i];
+  }
+}
+
+int a;
+int table[max];
+for(a=0;a<=max;a++);
+{
+  table[a]=0;
+}
+
+
+int k,hit=0,fault=1;
+frames[0]=page[0];
+table[page[0]]=1;
+k=1;
+for(int i=1;i<n;i++)
+{
+ if(table[page[i]]==1)
+{
+  hit=hit+1;
+}
+else
+{
+ table[page[i]]=0;
+ frames[k]=page[i];
+ fault=fault+1;
+ k=(k+no)%no;
+}
+}
+
+printf("page faults=%d\n",fault);
+printf("hit =%d\n",hit);
+return 0;
+}
