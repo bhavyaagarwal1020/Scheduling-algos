@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 int main()
 {
  int n;
@@ -26,29 +27,36 @@ for(int i=0;i<n;i++)
 }
 
 int a;
-int table[max];
-for(a=0;a<=max;a++);
+int table[max+1];
+
+memset(table, 0, sizeof(table));
+
+
+for(a=0;a<no;a++)
 {
-  table[a]=0;
+ frames[a]=-1;
 }
 
-
-int k,hit=0,fault=1;
-frames[0]=page[0];
-table[page[0]]=1;
-k=1;
+int k=0,hit=0,fault=1;
+frames[k]=page[0];
+table[frames[k]]=1;
+k++;
 for(int i=1;i<n;i++)
 {
+ 
  if(table[page[i]]==1)
 {
   hit=hit+1;
+  
 }
 else
 {
- table[page[i]]=0;
+ table[frames[k]]=0;
  frames[k]=page[i];
  fault=fault+1;
- k=(k+no)%no;
+
+ table[frames[k]]=1;
+ k=(k+1)%no;
 }
 }
 
